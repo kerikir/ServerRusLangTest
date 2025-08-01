@@ -21,7 +21,7 @@
 
 ### Backend
 ![ASP.NET](https://img.shields.io/badge/ASP.NET-6.0-blueviolet?logo=.net)
-![Entity Framework](https://img.shields.io/badge/EF_Core-7.0-green)
+![Entity Framework](https://img.shields.io/badge/Entity_Framework_Core-7.0-green)
 - REST API
 - Swagger для документации
 - CORS для кросс-доменных запросов
