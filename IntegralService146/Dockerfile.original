@@ -1,0 +1,23 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["IntegralService146/IntegralService146.csproj", "IntegralService146/"]
+RUN dotnet restore "IntegralService146/IntegralService146.csproj"
+COPY . .
+WORKDIR "/src/IntegralService146"
+RUN dotnet build "IntegralService146.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "IntegralService146.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "IntegralService146.dll"]
+
+ENV ASPNETCORE_ENVIRONMENT=Development
